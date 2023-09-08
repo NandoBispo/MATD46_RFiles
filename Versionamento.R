@@ -3,6 +3,10 @@
 # Tutorial:
 # https://beatrizmilz.github.io/slidesR/git_rstudio/11-2021-ENCE.html#22
 
+# https://curso-r.githud.io/zen-do-r/git-githud.html
+# gitcreds::gitcreds_set()
+
+
 # Pacotes ----
 if (!require(pacman)) install.packages("pacman")
 
