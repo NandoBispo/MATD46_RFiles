@@ -146,8 +146,38 @@ plot(prop.table(table(amostra3)))
 # E(amostra3) = 25*0.5 = 12.5
 
 # 28/09/23 -----
+sim.normal <- function(n){
+  x <- vector()
+  i = 1
+  while(i <= n){
+    u <- runif(1)
+    z.star <- -log(1-u)
+    
+    aux1 <- exp(-0.5*z.star^2*z.star)
+    aux2 <- sqrt(1/exp(1))
+    alpha <- aux2*aux1
+    
+    nu <- runif(1)
+    
+    if(alpha<=nu){
+      z = z.star
+      u.star <- runif(1)
+      ifelse(u.star<0.5, x <- c(x,z), x <- c(x,-z))
+      i = i+1
+    }
+  }
+  return(x)
+}
 
+amostra <- sim.normal(n=1000)  
+hist(amostra, freq=F)
+M <- sqrt(2*exp(1)/pi)
+1/M
+mu = 65
+sigma = 5
 
+amostra2 <- mu+sigma*amostra
+hist(amostra2)
 
 
 
