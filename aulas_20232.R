@@ -145,6 +145,7 @@ amostra3 <- sim3.Binomial(N=1000,n=25,p=0.5)
 plot(prop.table(table(amostra3)))
 # E(amostra3) = 25*0.5 = 12.5
 
+# 28/09/23 -----
 
 
 
