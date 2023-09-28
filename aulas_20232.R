@@ -169,12 +169,15 @@ sim.normal <- function(n){
   return(x)
 }
 
-amostra <- sim.normal(n=1000)  
+amostra <- sim.normal(n=1e4)  
 hist(amostra, freq=F)
 M <- sqrt(2*exp(1)/pi)
 1/M
 mu = 65
 sigma = 5
+
+mu = 65
+sigma = 50
 
 amostra2 <- mu+sigma*amostra
 hist(amostra2)
