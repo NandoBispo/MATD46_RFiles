@@ -30,9 +30,11 @@ dados|>
   theme_bw()
 
 ## Item f. ----
+mFit = stats::lm(formula = prod~., data = dados)
 
+anova(mFit)
 
-
+broom::tidy(mFit)
 
 
 
