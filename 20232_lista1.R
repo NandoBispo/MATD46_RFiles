@@ -12,7 +12,6 @@ area=c(7.1, 10.4, 7.2, 8.2, 8.5, 11.9, 12.1, 12.5, 12, 11.3)
 
 dados=base::cbind(prod, pot, area)|>base::as.data.frame()
 
-
 dados|>
   ggplot2::ggplot(aes(x = pot, y = prod))+
   ggplot2::geom_point()+
