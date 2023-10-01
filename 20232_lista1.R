@@ -1,5 +1,7 @@
-# Lista 1 - MATD46_2023.2
 
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+# Lista 1 - MATD46_2023.2
+# %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 if (!require(pacman)) install.packages("pacman")
 pacman::p_load(readxl,  janitor, tidyverse)
@@ -37,14 +39,14 @@ broom::tidy(mFit)
 
 # Questão 2 ----
 
-pacman::p_load(MASS)
+pacman::p_load(MASS, kableExtra, xtable)
 
 utils::data(UScrime)
 utils::help(UScrime)
 
 dplyr::glimpse(UScrime)
 
-## Item a ----
+## Itens a e b ----
 
 anyNA(UScrime)
 
@@ -57,17 +59,138 @@ summarytools::st_options(lang = "pt")
 UScrime|>
   dplyr::select(Po1, Po2)|>
   summarytools::descr(
-    stats = c()
+    stats = c("min", "q1", "med", "mean","q3", "max",  "sd"),
+    # round.digits = 3,
+    justify = "c",
+    style =  "simple", #"rmarkdown", #"grid", #"jira", #"simple",
+    headings = F,
+    # split.tables = 1, 
+    rescale.weights = T,
+    transpose = T
+  )|> xtable::xtable()
+
+
+## Item c ----
+UScrime|>
+  dplyr::select(U1)|>
+  summarytools::descr(
+    stats = c("min", "max"),
+    justify = "c",
+    style =  "simple",
+    headings = F,
+    rescale.weights = T,
+    transpose = T
+  )|> xtable::xtable()
+
+# Questão 3 ----
+
+funVec <- function(x){
+  if(is.vector(x) == F) print("Não é vetor")
+    
+  media <- mean(x)
+  variancia <- var(x)
+  coef <- (sd(x)/media)*100
+  
+  m1 <- cbind(media, variancia, coef)
+  
+  return(round(m1,3))
+}
+
+data(mtcars)
+
+funVec(mtcars$wt)
+
+# Teste de verificação da função _______________________________
+mtcars|>
+  dplyr::select(wt)|>
+  summarytools::descr(
+    stats = c("mean", "sd", "cv"),
+    justify = "c",
+    style =  "simple",
+    headings = F,
+    rescale.weights = T,
+    transpose = T
+  )
+# __________________________________________________________________
+
+# Questão 4 ----
+## Fç split() ----
+
+# https://acervolima.com/divida-os-dados-em-grupos-na-programacao-r-funcao-split/
+
+help(split)
+# Divide um conjunto de dados com base em algum critério.
+# Exemplo:
+split(x=mtcars, f=mtcars$gear)
+
+# Usando Tidyverse
+mtcars|>
+  dplyr::group_by(gear)
+
+## Fç aggregate() ----
+
+# https://acervolima.com/calcule-estatisticas-de-resumo-de-subconjuntos-na-programacao-r-funcao-aggregate/
+
+help(aggregate)
+
+# Divide um conjunto de dados com base em algum critério e aplica alguma função estatística nele.
+
+# Exemplo:
+
+stats::aggregate(x=mtcars, by=list(mtcars$gear), FUN=mean)
+
+# Usando Tidyverse
+mtcars|>
+  dplyr::group_by(gear)|>
+  dplyr::summarise(
+    mpg = mean(mpg),
+    cyl = mean(cyl),
+    disp = mean(disp),
+    qtd = n()
   )
 
 
-summarytools::descr(
-  stats = c("min", "q1", "med", "mean","q3", "max",  "sd"),
-  # round.digits = 3,
-  justify = "c",
-  style = "rmarkdown", #"grid", #"jira", #"simple",
-  headings = F,
-  # split.tables = 1, 
-  rescale.weights = T,
-  transpose = F
-)
+# Questão 5 ----
+pacman::p_load(microbenchmark)
+
+microbenchmark::microbenchmark()
+
+
+# Questão 6 ----
+x <- runif(3000, min = 0, max = 1)
+y <- runif(3000, min = 0, max = 1)
+
+z=x+y
+
+hist(z)
+hist(x)
+hist(y)
+
+# Questão 7 ----
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
