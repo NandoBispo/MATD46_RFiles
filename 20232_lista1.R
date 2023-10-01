@@ -35,14 +35,39 @@ anova(mFit)
 
 broom::tidy(mFit)
 
+# Questão 2 ----
+
+pacman::p_load(MASS)
+
+utils::data(UScrime)
+utils::help(UScrime)
+
+dplyr::glimpse(UScrime)
+
+## Item a ----
+
+anyNA(UScrime)
+
+UScrime|>
+  dplyr::select(Po1, Po2)|>
+  mean()
+
+summarytools::st_options(lang = "pt")
+
+UScrime|>
+  dplyr::select(Po1, Po2)|>
+  summarytools::descr(
+    stats = c()
+  )
 
 
-
-
-
-
-
-
-
-
-
+summarytools::descr(
+  stats = c("min", "q1", "med", "mean","q3", "max",  "sd"),
+  # round.digits = 3,
+  justify = "c",
+  style = "rmarkdown", #"grid", #"jira", #"simple",
+  headings = F,
+  # split.tables = 1, 
+  rescale.weights = T,
+  transpose = F
+)
