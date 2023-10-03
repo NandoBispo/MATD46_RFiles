@@ -182,11 +182,77 @@ sigma = 50
 amostra2 <- mu+sigma*amostra
 hist(amostra2)
 
+# 03/10/23 ----
+# random.Poisson
+
+x <- 0:15
+y <- dpois(x,lambda=3,log = F)
+g <- dexp(x,1/3)
+
+# plot(table(x,y))
+plot(y,type = "h",ylim=c(0,0.3))
+graphics::lines(x,g, col="red")
+
+?stats::optimize
+
+h <- function(x){
+  num <- (3^(x+1))*exp((x/3)-3)
+  den <- factorial(x)
+  r <- num/den
+}
+
+op <- stats::optimize(h,c(0,15),maximum = T)
+op
+# "maximum" é a raiz da função.
+# "objective" é a função h aplicada no ponto de otimização.
+
+M <- op$objective
+
+# Geração d enúmeros aleatórios da dist. Poisson comparâmetro lambda=3
+
+# Funções.R
+sim.Poison <- function(n){
+  x <- vector()
+  op <- stats::optimize(h,c(0,15),maximum = T)
+  M <- op$objective
+  i=1
+  cont=0 # contador
+  while (i <= n) {
+    cont=cont+1
+    u1 <- runif(1,0,1)
+    yc <- -3*log(u1)
+    alpha <- (1/M)*h(yc)
+    u2 <- runif(1,0,1)
+    if(u2<=alpha){
+      x <- c(x,base::floor(yc))
+      i=i+1
+    }
+  }
+  resultados <- base::list()
+  resultados$amostra <- x
+  resultados$contador <- cont
+  resultados$taxa <- n/cont
+  return(resultados)
+  # return(x)
+}
+
+# Análise.R
+# source("funcoes.R")
+
+set.seed(123)
+amostra <- sim.Poison(100)
+amostra
+
+plot(prop.table(table(amostra)),ylab="")
 
 
+1-100/183
+
+# De 100 amostras, 183 foram geradas, logo a eficiencia empirica = n/contador = 100/183
 
 
+# EXEMPLO 2:
+?dgamma # para verificar a fç de distribuição.
 
-
-
+(3/2*gamma(3/2))*sqrt(3/2)*(1/sqrt(exp(1)))
 
