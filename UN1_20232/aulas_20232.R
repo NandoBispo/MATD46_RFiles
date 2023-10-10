@@ -1,7 +1,5 @@
 # AULAS ----
 
-
-
 # 19/09/23 -----
 
 # Função de densidade
@@ -57,7 +55,7 @@ hist(amostra, freq = F)
 rBernoulli <- function(n,pi){
   x <- vector()
   for (i in 1:n) {
-    u <- runif(1,0,1)
+    u <- runif(n)
     if(u < pi){x <- c(1,x)}else{x <- c(0,x)}
   }
   return(x)
@@ -208,7 +206,7 @@ op
 
 M <- op$objective
 
-# Geração d enúmeros aleatórios da dist. Poisson comparâmetro lambda=3
+# Geração de números aleatórios da dist. Poisson comparâmetro lambda=3
 
 # Funções.R
 sim.Poison <- function(n){
