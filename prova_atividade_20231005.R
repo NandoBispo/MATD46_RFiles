@@ -1,5 +1,5 @@
 # =-==========================================-=
-# AVALIAÇÃO/ATIVIDADE MATD46 
+# AVALIAÇÃO/ATIVIDADE MATD46 05/10/2023
 # =-==========================================-=
 
 set.seed(123)
@@ -63,7 +63,6 @@ sim1 <- function(n){
     }else{
       aux2 = sqrt(8*(u-0.5))
       x <- c(x,aux2)
-      
     }
   }
   return(x)
@@ -71,6 +70,107 @@ sim1 <- function(n){
 
 amostra <- sim1(10000)
 hist(amostra,freq = F)
+
+# Aula 10/10/23 ----
+## Ex1 ----
+sim2 <- function(n,p){
+  u <- runif(n)
+  aux <- log(1-u)/log(1-p)
+  x <- base::floor(aux)+1
+  return(x)
+}
+
+amostra <- sim2(n=1000,p=0.3)
+plot(prop.table(table(amostra)))
+
+## Ex2 ----
+h <- function(x){
+  l <- 30*x^3*(1-x)^2
+  return(l)
+}
+
+sim3 <- function(n){
+  aux <- optimize(h,c(0,1), maximum = T)
+  c <- aux$objective
+  i <- 1
+  x <- vector()
+  while (i<=n) {
+    x.c <- runif(1)
+    alpha <- (1/c)*h(x.c)
+    u <- runif(1)
+    if(u<alpha){
+      x <- c(x,x.c)
+      i=i+1
+    }
+  }
+  return(x)
+}
+
+sim3 <- function(n){
+  aux <- optimize(h,c(0,1), maximum = T)
+  c <- aux$objective
+  i <- 1
+  x <- vector()
+  rej <- vector()
+  while (i<=n) {
+    x.c <- runif(1)
+    alpha <- (1/c)*h(x.c)
+    u <- runif(1)
+    if(u<alpha){
+      x <- c(x,x.c)
+      i=i+1
+    }
+    rej <- c(rej,x.c)
+  }
+  result <- list()
+  result$x <- x
+  result$y <- rej
+  
+  return(result)
+}
+
+sim3 <- function(n){
+  aux <- optimize(h,c(0,1), maximum = T)
+  c <- aux$objective
+  i <- 1
+  x <- vector()
+  rej <- vector()
+  while (i<=n) {
+    x.c <- runif(1)
+    alpha <- (1/c)*h(x.c)
+    u <- runif(1)
+    if(u<alpha){
+      x <- c(x,x.c)
+      i=i+1
+    }else{
+      rej <- c(rej,x.c)
+    }
+  }
+  result <- list()
+  result$x <- x
+  result$y <- rej
+  
+  return(result)
+}
+
+set.seed(123)
+amostra <- sim3(10)
+amostra
+hist(amostra, freq = F)
+
+x.seq <- seq(from=0, to=1, by=0.01)
+h.x <- h(x.seq)
+
+plot(x.seq,h.x,type = "l")
+
+plot(amostra$x,amostra$y,type = "l")
+
+
+# plot(amostra$x,type = "l")
+plot(amostra$x,type = "p")
+points(amostra$y, col="red", pch=16)
+
+
 
 
 
