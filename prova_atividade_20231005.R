@@ -170,7 +170,22 @@ plot(amostra$x,amostra$y,type = "l")
 plot(amostra$x,type = "p")
 points(amostra$y, col="red", pch=16)
 
+plot(amostra$x,type = "l")
 
 
+amostra <- sim3(1000)
+hist(amostra$x, freq = F)
+lines(amostra$y)
 
+# =================================-=
+# A linha azul eu plotei assim:
+  x = seq(0, 1, length = 1000)
 
+t = function(x){
+  f = 30*x^3*(1-x)^2
+  return(f)
+}
+
+f = t(x)
+lines(x, f, col = "blue", lwd = 2)
+# =================================-=
